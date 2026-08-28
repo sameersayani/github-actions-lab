@@ -1,0 +1,20 @@
+name: GitHub Action
+
+on:
+  push:
+
+jobs:
+
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Say Hello
+        run: echo "Hello from GitHub Actions!"
+
+      - name: Show current directory
+        run: pwd
+
+      - name: List files
+        run: ls -la
