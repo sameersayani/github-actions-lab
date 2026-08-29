@@ -9,8 +9,12 @@ on:
     branches:
       - main
 
+env:
+ DOTNET_VERSION: '8.0.x'
+ BUILD_CONFIGURATION: Release
+
 jobs:
-  build-and-test:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -22,13 +26,46 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: ${{env.DOTNET_VERSION}}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        # run: dotnet build --no-restore --configuration Release
+        run: dotnet build --configuration $BUILD_CONFIGURATION
 
-      - name: Run tests
-        run: dotnet test --no-build --configuration Release
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-build
+          path: |
+            **/bin/Release/**
+            !**/bin/Release/**/ref/**
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout source code
+       uses: actions/checkout@v4
+
+     - name: Setup .NET
+       uses: actions/setup-dotnet@v4
+       with:
+         dotnet-version: ${{env.DOTNET_VERSION}}
+
+     - name: Restore dependencies
+       run: dotnet restore
+
+     - name: Run tests
+       run: dotnet test --configuration Release
+    
