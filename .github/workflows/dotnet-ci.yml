@@ -107,3 +107,17 @@ jobs:
        with:
             name: code-coverage-${{ matrix.dotnet-version }}
             path: '**/TestResults/**/coverage.cobertura.xml'
+
+     - name: Generate coverage report
+       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
+       with:
+            reports: '**/TestResults/**/coverage.cobertura.xml'
+            targetdir: '${{ github.workspace }}/coverage-report'
+            reporttypes: 'Html;MarkdownSummaryGithub'
+
+     - name: Upload coverage report
+       if: always()
+       uses: actions/upload-artifact@v4
+       with:
+        name: coverage-report-${{ matrix.dotnet-version }}
+        path: '${{ github.workspace }}/coverage-report'
