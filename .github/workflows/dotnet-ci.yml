@@ -47,13 +47,17 @@ jobs:
         # run: dotnet build --no-restore --configuration Release
         run: dotnet build --configuration $BUILD_CONFIGURATION
 
+      - name: Publish application
+        run: dotnet publish -c Release -o ./publish
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-build
-          path: |
-            **/bin/Release/**
-            !**/bin/Release/**/ref/**
+          path: ./publish
+        #   path: |
+        #     **/bin/Release/**
+        #     !**/bin/Release/**/ref/**
 
   test:
     needs: build
