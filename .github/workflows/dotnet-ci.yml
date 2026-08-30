@@ -100,3 +100,10 @@ jobs:
        with:
         name: test-results-${{ matrix.dotnet-version }}
         path: '**/TestResults/*.trx'
+
+     - name: Upload code coverage
+       if: always()
+       uses: actions/upload-artifact@v4
+       with:
+            name: code-coverage-${{ matrix.dotnet-version }}
+            path: '**/TestResults/**/coverage.cobertura.xml'
