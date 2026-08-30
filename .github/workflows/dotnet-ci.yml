@@ -80,8 +80,11 @@ jobs:
      - name: Restore dependencies
        run: dotnet restore
 
+    #  - name: Run tests
+    #    run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
+
      - name: Run tests
-       run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
+       run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"    
 
      - name: Publish test results
        if: always()
