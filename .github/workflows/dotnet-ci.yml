@@ -82,11 +82,18 @@ jobs:
 
      - name: Run tests
        run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
-     
+
+     - name: Publish test results
+       if: always()
+       uses: dorny/test-reporter@v2
+       with:
+        name: .NET Tests
+        path: '**/TestResults/*.trx'
+        reporter: dotnet-trx
+
      - name: Upload test results
        if: always()
        uses: actions/upload-artifact@v4
        with:
-         name: test-results-${{ matrix.dotnet-version }}
-         path: '**/TestResults/*.trx'
-    
+        name: test-results-${{ matrix.dotnet-version }}
+        path: '**/TestResults/*.trx'
