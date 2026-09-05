@@ -33,6 +33,14 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+app.MapGet("/hello", () =>
+{
+    return Results.Ok(new
+    {
+        message = "Hello from Github Actions Lab 2B"
+    });
+});
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
