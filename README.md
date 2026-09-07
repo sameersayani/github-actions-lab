@@ -296,50 +296,7 @@ Require workflows to pass before merging PRs:
 
 ## 📊 Workflow Diagram
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        GitHub Repository                             │
-│  ┌──────────────────────────────────────────────────────────────┐   │
-│  │  .github/workflows/dotnet-ci.yml                              │   │
-│  │  ═══════════════════════════════════════════════════════════  │   │
-│  │  on: [push to main, pull_request]                            │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
-                          │
-                    🔔 EVENT TRIGGERED
-                          │
-                ┌─────────┴─────────┐
-                │                   │
-        ┌───────▼────────┐  ┌──────▼──────────┐
-        │   BUILD JOB    │  │   BUILD JOB     │
-        │  (ubuntu-latest)  (windows-latest) │
-        ├────────────────┤  └─────────────────┘
-        │ ✅ Checkout   │
-        │ ✅ Setup .NET │
-        │ ✅ Restore    │
-        │ ✅ Build      │
-        │ ✅ Artifacts  │
-        └────────┬───────┘
-                 │
-         🎯 BUILD SUCCEEDS
-                 │
-        ┌────────▼────────┐
-        │    TEST JOB     │
-        │ (ubuntu-latest) │
-        ├─────────────────┤
-        │ ✅ Checkout    │
-        │ ✅ Setup .NET  │
-        │ ✅ Run Tests   │
-        └────────┬────────┘
-                 │
-       ┌─────────┴──────────┐
-       │                    │
-   ✅ ALL PASS         ❌ FAILURE
-       │                    │
-  GREEN ✓              RED ✗
-  on PR                on PR
-```
-
+![GitHub CI Pipeline](./GitHub%20CI%20Pipeline%20for%20.NET-2026-09-07-014849.png)
 ---
 
 ## 🎯 Quick Reference
