@@ -296,8 +296,7 @@ Require workflows to pass before merging PRs:
 
 ## 📊 Workflow Diagram
 
-```
-![alt text](<GitHub CI Pipeline for .NET-2026-09-07-014849.png>)
+![GitHub CI Pipeline](./GitHub%20CI%20Pipeline%20for%20.NET-2026-09-07-014849.png)
 ---
 
 ## 🎯 Quick Reference
